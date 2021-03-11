@@ -1,4 +1,4 @@
-#!/usr/bin/env expect
+#!/usr/bin/expect -f
 
 set embox_prompt "root@embox:/#"
 
