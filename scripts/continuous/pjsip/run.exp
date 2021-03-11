@@ -1,0 +1,7 @@
+#!/usr/bin/env expect
+
+set embox_prompt "root@embox:/#"
+
+set timeout 20
+spawn ./scripts/qemu/auto_qemu
+expect $embox_prompt
