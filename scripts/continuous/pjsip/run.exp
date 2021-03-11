@@ -2,6 +2,6 @@
 
 set embox_prompt "root@embox:/#"
 
-set timeout 20
+set timeout 600
 spawn ./scripts/qemu/auto_qemu
 expect $embox_prompt
