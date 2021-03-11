@@ -10,7 +10,7 @@ jobs:
       - name: install dependencies
         run: sudo apt-get install -y build-essential gcc-multilib curl qemu-system-x86
       - name: confload
-        run: make confload-x86/qemu && ./conf/conf_prepare.sh pjlib-test
+        run: make confload-x86/qemu #&& ./conf/conf_prepare.sh pjlib-test
       - name: build
         run: make -j $(nproc)
       - name: pjlib-test
