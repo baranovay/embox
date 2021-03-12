@@ -6,6 +6,9 @@
 TEST=`echo $1 | sed 's/-/_/g'`
 
 case $TEST in
+	pjsip_test)
+		# fallthrough
+		;&
 	pjlib_test)
 		sed -i -E "s/\/\/(.*)$TEST/\1$TEST/g" conf/mods.conf
 		sed -i -E "s/\/\/(.*)\"$TEST\"(.*)/\1\"$TEST\"\2/g" conf/system_start.inc
