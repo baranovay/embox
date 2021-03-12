@@ -15,7 +15,7 @@ case $TEST in
 		;;
 	*)
 		echo "Availbale tests:"
-		echo "    pjlib-test"
+		echo "    pjlib-test pjsip-test"
 		exit 1
 		;;
 esac
