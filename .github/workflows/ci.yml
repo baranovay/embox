@@ -14,4 +14,4 @@ jobs:
       - name: build
         run: make -j $(nproc)
       - name: pjlib-test
-        run: ./scripts/continuous/pjsip/run.exp
+        run: ./scripts/qemu/auto_qemu | tee log.txt && grep "Looks like everything is okay" log.txt
