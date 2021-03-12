@@ -15,3 +15,16 @@ jobs:
         run: make -j $(nproc)
       - name: pjlib-test
         run: ./scripts/qemu/auto_qemu | tee log.txt && grep "Looks like everything is okay" log.txt
+
+  pjsip-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: install dependencies
+        run: sudo apt-get install -y build-essential gcc-multilib curl qemu-system-x86 expect
+      - name: confload
+        run: make confload-project/pjsip/x86-qemu-pjsip-tests && ./conf/conf_prepare.sh pjsip-test
+      - name: build
+        run: make -j $(nproc)
+      - name: pjsip-test
+        run: ./scripts/qemu/auto_qemu | tee log.txt && grep "Looks like everything is okay" log.txt
