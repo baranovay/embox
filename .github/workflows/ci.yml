@@ -14,7 +14,7 @@ jobs:
       - name: build
         run: make -j $(nproc)
       - name: pjlib-test
-        run: ./scripts/qemu/auto_qemu | tee log.txt && grep "Looks like everything is okay" log.txt
+        run: timeout 10m ./scripts/qemu/auto_qemu | tee log.txt && grep "Looks like everything is okay" log.txt
 
   pjsip-test:
     runs-on: ubuntu-latest
@@ -27,4 +27,4 @@ jobs:
       - name: build
         run: make -j $(nproc)
       - name: pjsip-test
-        run: ./scripts/qemu/auto_qemu | tee log.txt && grep "Looks like everything is okay" log.txt
+        run: timeout 40m ./scripts/qemu/auto_qemu | tee log.txt && grep "Looks like everything is okay" log.txt
