@@ -248,6 +248,8 @@ int mspace_free(void *ptr, struct dlist_head *mspace) {
 	assert(ptr);
 	assert(mspace);
 
+	sched_lock();
+
 	mm = pointer_to_mm(ptr, mspace);
 
 	if (mm != NULL) {
@@ -267,6 +269,8 @@ int mspace_free(void *ptr, struct dlist_head *mspace) {
 #endif
 		return -1;
 	}
+
+	sched_unlock();
 
 	return 0;
 }
