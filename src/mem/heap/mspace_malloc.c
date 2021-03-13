@@ -30,6 +30,8 @@
 
 #include <mem/heap/mspace_malloc.h>
 
+#include <kernel/sched/sched_lock.h>
+
 /* TODO make it per task field */
 //static DLIST_DEFINE(task_mem_segments);
 
@@ -200,22 +202,24 @@ static struct mm_segment *mm_try_alloc_segment(size_t size, size_t boundary) {
 void *mspace_memalign(size_t boundary, size_t size, struct dlist_head *mspace) {
 	/* No corresponding heap was found */
 	struct mm_segment *mm;
-	void *block;
+	void *block = NULL;
 
 	if (size == 0) {
 		return NULL;
 	}
 
+	sched_lock();
+
 	assert(mspace);
 
 	block = mspace_do_alloc(boundary, size, mspace);
 	if (block) {
-		return block;
+		goto out_unlock;
 	}
 
 	mm = mm_try_alloc_segment(size, boundary);
 	if (mm == NULL) {
-		return NULL;
+		goto out_unlock;
 	}
 	dlist_head_init(&mm->link);
 	dlist_add_next(&mm->link, mspace);
@@ -226,6 +230,9 @@ void *mspace_memalign(size_t boundary, size_t size, struct dlist_head *mspace) {
 	if (!block) {
 		panic("new memory block is not sufficient to allocate requested size");
 	}
+
+out_unlock:
+	sched_unlock();
 
 	return block;
 }
